@@ -1,0 +1,71 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Player Hitbox
+  - Enemy
+  - Bomb
+  - Wall
+  - Ground
+  - Base
+  - Special Base
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - Ground
+  - Wall
+  - Player
+  - Player Hitbox
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: Map
+    uniqueID: 1294563425
+    locked: 0
+  - name: Ground
+    uniqueID: 4037655353
+    locked: 0
+  - name: Wall
+    uniqueID: 2879508013
+    locked: 0
+  - name: Player
+    uniqueID: 3989645709
+    locked: 0
+  - name: Enemy
+    uniqueID: 96301037
+    locked: 0
+  - name: DynamicBase
+    uniqueID: 39992931
+    locked: 0
+  - name: Box
+    uniqueID: 1057104289
+    locked: 0
