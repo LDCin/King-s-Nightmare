@@ -8,6 +8,8 @@ public class GameConfig
     public static string RUN_BOOL = "IsRunning";
     public static string DEAD_BOOL = "IsDead";
     public static string IDLE_BOOL = "IsIdle";
+    public static string CLIMB_IDLE_BOOL = "IsClimbIdle";
+    public static string CLIMB_TRIGGER = "Climb";
     // II. Bomb
     public static string EXPLODE_TRIGGER = "Explode";
 
@@ -18,8 +20,11 @@ public class GameConfig
     public static string PLAYER_TAG = "Player";
     public static string ENEMY_TAG = "Enemy";
     public static string BOMB_TAG = "Bomb";
+    public static string CANNON_BALL_TAG = "Cannon Ball";
     public static string WALL_TAG = "Wall";
     public static string GROUND_TAG = "Ground";
     public static string SPECIAL_BASE_TAG = "Special Base";
     public static string BASE_TAG = "Base";
+    public static string ROPE_LADDER_TAG = "Rope Ladder";
+    public static string TOP_STEP_TAG = "Top Step";
 }

@@ -59,6 +59,8 @@ MonoBehaviour:
   _groundCheck: {fileID: 8494633966012447189}
   _groundBoxSize: {x: 0, y: 0}
   _hitBox: {fileID: 1370197912509355289}
+  _isVulnarable: 0
+  _attackCooldown: 1
 --- !u!212 &686272389586179576
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -98,7 +100,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -305321587
-  m_SortingLayer: 4
+  m_SortingLayer: 8
   m_SortingOrder: 0
   m_Sprite: {fileID: -698531981, guid: 0a607df1b90b8b74b895e9027237b089, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

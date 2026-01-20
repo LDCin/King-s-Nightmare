@@ -11,6 +11,9 @@ TagManager:
   - Ground
   - Base
   - Special Base
+  - Rope Ladder
+  - Top Step
+  - Cannon Ball
   layers:
   - Default
   - TransparentFX
@@ -57,15 +60,21 @@ TagManager:
   - name: Wall
     uniqueID: 2879508013
     locked: 0
-  - name: Player
-    uniqueID: 3989645709
-    locked: 0
-  - name: Enemy
-    uniqueID: 96301037
+  - name: Door
+    uniqueID: 3053925931
     locked: 0
   - name: DynamicBase
     uniqueID: 39992931
     locked: 0
   - name: Box
     uniqueID: 1057104289
+    locked: 0
+  - name: Base
+    uniqueID: 1177536667
+    locked: 0
+  - name: Enemy
+    uniqueID: 96301037
+    locked: 0
+  - name: Player
+    uniqueID: 3989645709
     locked: 0

@@ -143,7 +143,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _detectZone: {fileID: 8488204411139736927}
   _hP: 2
+  _invulnerableTime: 1
   _bombPrefab: {fileID: -5698783646665499648, guid: 41632a60aef5e6b46b923fce43e66526, type: 3}
+  _throwPoint: {fileID: 1908262550771515397}
   _flightTime: 1.2
   _attackCooldown: 3
 --- !u!212 &3767271568384728556
@@ -185,7 +187,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 96301037
-  m_SortingLayer: 5
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: 1459781740, guid: 60d22c05d64888a438cbad1792367f91, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

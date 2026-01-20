@@ -28,13 +28,12 @@ public class Base : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         Debug.Log("Touch");
-        if (collision.collider.CompareTag(GameConfig.GROUND_TAG) || collision.collider.CompareTag(GameConfig.WALL_TAG))
+        if (collision.collider.CompareTag(GameConfig.GROUND_TAG) || 
+            collision.collider.CompareTag(GameConfig.WALL_TAG) ||
+                collision.collider.CompareTag(GameConfig.BASE_TAG) ||
+                    collision.collider.CompareTag(GameConfig.SPECIAL_BASE_TAG))
         {
             ChangeDirection();
         }
-    }
-    private void Active()
-    {
-        _moveX = 1;
     }
 }

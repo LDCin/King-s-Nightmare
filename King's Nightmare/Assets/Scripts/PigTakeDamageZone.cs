@@ -5,9 +5,9 @@ using UnityEngine;
 public class PigTakeDamageZone : MonoBehaviour
 {
     [SerializeField] private Pig _pig;
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        if (collision.CompareTag(GameConfig.PLAYER_HITBOX))
+        if (other.CompareTag(GameConfig.PLAYER_HITBOX))
         {
             _pig.TakeDamage(1);
         }

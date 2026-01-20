@@ -35,17 +35,17 @@ public class CameraController : MonoBehaviour
     }
     private void InitScreenBound()
     {
-        _topCamBound.size = new Vector3(_camH, _camW, 0);
+        _topCamBound.size = new Vector3(_camW, 0.2f, 0);
         _botCamBound.size = _topCamBound.size;
         _topCamBound.transform.position = new Vector2(_cam.transform.position.x, _cam.transform.position.y + _camH / 2);
         _botCamBound.transform.position = new Vector2(_cam.transform.position.x, _cam.transform.position.y - _camH / 2);
     }
     public void MoveUp()
     {
-        transform.position += new Vector3(0, _camH, 0);
+        transform.position += new Vector3(0, _camH - _camH / 10, 0);
     }
     public void MoveDown()
     {
-        transform.position -= new Vector3(0, _camH, 0);
+        transform.position -= new Vector3(0, _camH - _camH / 10, 0);
     }
 }

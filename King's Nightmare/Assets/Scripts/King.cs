@@ -20,6 +20,7 @@ public class King : MonoBehaviour
     private int _currentHP = 3;
     [SerializeField] private float _speed = 1f;
     [SerializeField] private float _jumpForce = 10f;
+    private float _initialGravityScale;
     // [SerializeField] private int _damage = 1;
     // private float _rayLength = 0.5f;
     [Header("Physics")]
@@ -29,10 +30,16 @@ public class King : MonoBehaviour
     [SerializeField] private Transform _hitBox;
 
     [Header("Logic Parameters")]
-    private float moveX = 0f;
-
+    private float _moveX = 0f;
+    private float _moveY = 0f;
+    private bool _canJump = false;
     private bool _isAttacking = false;
+    private bool _isClimbing = false;
+    private bool _isWaitingForClimbing = false;
     private bool _isDead = false;
+    [SerializeField] private bool _isVulnarable = true;
+    [SerializeField] private float _attackCooldown = 1;
+    private float _attackTimer = 0;
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
@@ -45,48 +52,118 @@ public class King : MonoBehaviour
     {
         _currentHP = _hP;
         _isDead = false;
+        _initialGravityScale = _rb.gravityScale;
     }
     private void Update()
     {
         if (_isDead)
         {
-            moveX = 0;
+            _moveX = 0;
             return;
         }
-        if (Input.GetKey(KeyCode.A))
+        if (_isWaitingForClimbing && !_isClimbing && Input.GetKey(KeyCode.W))
         {
-            moveX = -1;
-            _sr.flipX = true;
+            ChangeToClimbingState();
         }
-        else if (Input.GetKey(KeyCode.D))
+        if (_isClimbing)
         {
-            moveX = 1;
-            _sr.flipX = false;
+            Climb();
         }
-        else moveX = 0f;
-        _anim.SetBool(GameConfig.RUN_BOOL, Mathf.Abs(moveX) > 0.01f);
-
-        if (Input.GetKeyDown(KeyCode.Space) && IsOnGround())
+        else
+        {
+            Move();
+        }
+        if (Input.GetKeyDown(KeyCode.Space) && (IsOnGround() || _canJump))
         {
             _rb.velocity = new Vector2(_rb.velocity.x, _jumpForce);
             _anim.SetTrigger(GameConfig.JUMP_TRIGGER);
         }
-        if (Input.GetKeyDown(KeyCode.J) && !_isAttacking)
-        {
-            _isAttacking = true;
-            _anim.SetTrigger(GameConfig.ATTACK_TRIGGER);
-        }
     }
     private void FixedUpdate()
     {
-        float x = _isAttacking ? 0f : moveX * _speed;
-        if (_baseRb != null)
+        float x;
+        float y;
+        if (_isClimbing)
+        {
+            x = 0f;
+            y = _moveY * _speed;
+        }
+        else
+        {
+            x = _isAttacking ? 0f : _moveX * _speed;
+            y = _rb.velocity.y;
+        }
+
+        if (_baseRb != null && !_isClimbing)
         {
             x += _baseRb.velocity.x;
         }
-        _rb.velocity = new Vector2(x, _rb.velocity.y);
+        _rb.velocity = new Vector2(x, y);
     }
+    private void Move()
+    {
+        _moveX = 0;
+        _moveY = 0;
+        if (Input.GetKey(KeyCode.A))
+        {
+            Debug.Log("Move left");
+            _moveX = -1;
+            _sr.flipX = true;
+        }
+        else if (Input.GetKey(KeyCode.D))
+        {
+            Debug.Log("Move right");
+            _moveX = 1;
+            _sr.flipX = false;
+        }
+        else _moveX = 0;
+        _anim.SetBool(GameConfig.RUN_BOOL, Mathf.Abs(_moveX) > 0.01f);
 
+        // if (Input.GetKeyDown(KeyCode.Space) && (IsOnGround() || _canJump))
+        // {
+        //     _rb.velocity = new Vector2(_rb.velocity.x, _jumpForce);
+        //     _anim.SetTrigger(GameConfig.JUMP_TRIGGER);
+        // }
+
+        _attackTimer += Time.deltaTime;
+        if (Input.GetKeyDown(KeyCode.J) && !_isAttacking && _attackTimer >= _attackCooldown)
+        {
+            _isAttacking = true;
+            _attackTimer = 0;
+            _anim.SetTrigger(GameConfig.ATTACK_TRIGGER);
+        }
+    }
+    private void Climb()
+    {
+        _moveX = 0;
+        _moveY = 0;
+        if (Input.GetKey(KeyCode.W))
+        {
+            _moveY = 1;
+        }
+        else if (Input.GetKey(KeyCode.S))
+        {
+            _moveY = -1;
+        }
+        else _moveY = 0;
+        if (Math.Abs(_moveY) > 0.01)
+        {
+            _anim.SetTrigger(GameConfig.CLIMB_TRIGGER);
+        }
+    }
+    private void ChangeToClimbingState()
+    {
+        _isClimbing = true;
+        _isWaitingForClimbing = false;
+        _rb.gravityScale = 0;
+        _anim.SetBool(GameConfig.CLIMB_IDLE_BOOL, true);
+    }
+    private void ChangeToNormalState()
+    {
+        _isClimbing = false;
+        _rb.gravityScale = _initialGravityScale;
+        _anim.SetBool(GameConfig.CLIMB_IDLE_BOOL, false);
+    }
     private bool IsOnGround()
     {
         return Physics2D.OverlapBox(_groundCheck.position, _groundBoxSize, 0f, _groundLayer);
@@ -122,31 +199,59 @@ public class King : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag(GameConfig.BOMB_TAG))
+        if (other.CompareTag(GameConfig.ROPE_LADDER_TAG))
         {
-            Bomb bomb = other.GetComponent<Bomb>();
-            TakeDamage(bomb.GetDamage());
+            _isWaitingForClimbing = true;
+            // float ladderCenterX = other.bounds.center.x;
+            // _rb.position = new Vector2(ladderCenterX, _rb.position.y);
+        }
+        if (other.CompareTag(GameConfig.TOP_STEP_TAG))
+        {
+            _canJump = true;
         }
     }
-    private void OnCollisionEnter2D(Collision2D other)
+    private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.collider.CompareTag(GameConfig.SPECIAL_BASE_TAG))
+        if (other.CompareTag(GameConfig.ROPE_LADDER_TAG))
         {
-            _baseRb = other.collider.GetComponent<Rigidbody2D>();
-            transform.SetParent(other.transform);
+            _isWaitingForClimbing = false;
+            if (_isClimbing) ChangeToNormalState();
         }
-        else if (other.collider.CompareTag(GameConfig.ENEMY_TAG))
+        if (other.CompareTag(GameConfig.TOP_STEP_TAG))
         {
-            TakeDamage(1);
+            _canJump = false;
         }
     }
 
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.collider.CompareTag(GameConfig.SPECIAL_BASE_TAG) || other.collider.CompareTag(GameConfig.BASE_TAG))
+        {
+            _baseRb = other.collider.GetComponent<Rigidbody2D>();
+            // transform.SetParent(other.transform);
+        }
+        else if (other.collider.CompareTag(GameConfig.ENEMY_TAG))
+        {
+            if (_isVulnarable)
+            {
+                TakeDamage(1);
+            }
+        }
+        if (other.collider.CompareTag(GameConfig.BOMB_TAG) || other.collider.CompareTag(GameConfig.CANNON_BALL_TAG))
+        {
+            Bomb bomb = other.collider.GetComponent<Bomb>();
+            if (_isVulnarable)
+            {
+                TakeDamage(bomb.GetDamage());
+            }
+        }
+    }
     private void OnCollisionExit2D(Collision2D other)
     {
-        if (other.collider.CompareTag(GameConfig.SPECIAL_BASE_TAG))
+        if (other.collider.CompareTag(GameConfig.SPECIAL_BASE_TAG) || other.collider.CompareTag(GameConfig.BASE_TAG))
         {
             _baseRb = null;
-            transform.SetParent(null);
+            // transform.SetParent(null);
         }
     }
 }

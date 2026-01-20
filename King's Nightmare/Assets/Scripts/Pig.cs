@@ -4,10 +4,14 @@ using UnityEngine;
 
 public class Pig : MonoBehaviour
 {
+    private Animator _anim;
+    private SpriteRenderer _sr;
     [SerializeField] private GameObject _detectZone;
     [SerializeField] private int _hP = 2;
+    [SerializeField] private float _invulnerableTime = 0.5f;
+    private float _invulnerableTimer = 0f;
     [SerializeField] private Rigidbody2D _bombPrefab;
-    private Transform _throwPoint;
+    [SerializeField] private Transform _throwPoint;
     [SerializeField] private float _flightTime = 1.2f;
     [SerializeField] private float _attackCooldown = 2f;
     private Transform _playerTarget;
@@ -15,9 +19,8 @@ public class Pig : MonoBehaviour
     private bool _isAttacking = false;
     private bool _lostTargetWhileAttacking = false;
     private Vector3 _lockedTargetPos;
-
-    private Animator _anim;
-    private SpriteRenderer _sr;
+    [SerializeField] private GameObject _dialogue;
+    
     private void Awake()
     {
         _anim = GetComponent<Animator>();
@@ -25,10 +28,12 @@ public class Pig : MonoBehaviour
     }
     private void Start()
     {
-        _throwPoint = transform;
+        // _throwPoint = transform;
+        _invulnerableTimer = _invulnerableTime;
     }
     public void Update()
     {
+        if (_invulnerableTimer < _invulnerableTime) _invulnerableTimer += Time.deltaTime;
         if (_playerTarget == null) return;
         if (_playerTarget != null && !_isAttacking) FaceToPlayer();
         _attackTimer += Time.deltaTime;
@@ -51,6 +56,8 @@ public class Pig : MonoBehaviour
     }
     public void TakeDamage(int damage)
     {
+         if (_invulnerableTimer < _invulnerableTime) return;
+        _invulnerableTimer = 0;
         _anim.SetTrigger(GameConfig.HIT_TRIGGER);
         _hP -= damage;
         if (_hP <= 0)
@@ -100,5 +107,13 @@ public class Pig : MonoBehaviour
             _playerTarget = null;
             _lostTargetWhileAttacking = false;
         }
+    }
+    public void TurnOnDialogue()
+    {
+        _dialogue.SetActive(true);
+    }
+    public void TurnOffDialogue()
+    {
+        _dialogue.SetActive(false);
     }
 }

@@ -31,13 +31,15 @@ public class Bomb : MonoBehaviour
     {
         Destroy(gameObject);
     }
-    private void OnTriggerEnter2D(Collider2D other)
+    
+    private void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.CompareTag(GameConfig.WALL_TAG) || 
-            other.CompareTag(GameConfig.GROUND_TAG) || 
-                other.CompareTag(GameConfig.PLAYER_TAG) ||
-                    other.CompareTag(GameConfig.BASE_TAG) || 
-                        other.CompareTag(GameConfig.SPECIAL_BASE_TAG))
+        if (other.collider.CompareTag(GameConfig.WALL_TAG) || 
+            other.collider.CompareTag(GameConfig.GROUND_TAG) || 
+                other.collider.CompareTag(GameConfig.PLAYER_TAG) ||
+                    other.collider.CompareTag(GameConfig.BASE_TAG) || 
+                        other.collider.CompareTag(GameConfig.SPECIAL_BASE_TAG) ||
+                            other.collider.CompareTag(GameConfig.CANNON_BALL_TAG))
         {
             _rb.velocity = Vector2.zero;
             Explode();
