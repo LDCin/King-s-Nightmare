@@ -31,9 +31,13 @@ public class Bomb : MonoBehaviour
     {
         Destroy(gameObject);
     }
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        if (collision.CompareTag(GameConfig.WALL_TAG) || collision.CompareTag(GameConfig.GROUND_TAG) || collision.CompareTag(GameConfig.PLAYER_TAG))
+        if (other.CompareTag(GameConfig.WALL_TAG) || 
+            other.CompareTag(GameConfig.GROUND_TAG) || 
+                other.CompareTag(GameConfig.PLAYER_TAG) ||
+                    other.CompareTag(GameConfig.BASE_TAG) || 
+                        other.CompareTag(GameConfig.SPECIAL_BASE_TAG))
         {
             _rb.velocity = Vector2.zero;
             Explode();

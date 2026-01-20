@@ -120,30 +120,30 @@ public class King : MonoBehaviour
         _isDead = true;
         OnPlayerDied?.Invoke();
     }
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        if (collision.CompareTag(GameConfig.BOMB_TAG))
+        if (other.CompareTag(GameConfig.BOMB_TAG))
         {
-            Bomb bomb = collision.GetComponent<Bomb>();
+            Bomb bomb = other.GetComponent<Bomb>();
             TakeDamage(bomb.GetDamage());
         }
     }
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionEnter2D(Collision2D other)
     {
-        if (collision.collider.CompareTag(GameConfig.SPECIAL_BASE_TAG))
+        if (other.collider.CompareTag(GameConfig.SPECIAL_BASE_TAG))
         {
-            _baseRb = collision.collider.GetComponent<Rigidbody2D>();
-            transform.SetParent(collision.transform);
+            _baseRb = other.collider.GetComponent<Rigidbody2D>();
+            transform.SetParent(other.transform);
         }
-        else if (collision.collider.CompareTag(GameConfig.ENEMY_TAG))
+        else if (other.collider.CompareTag(GameConfig.ENEMY_TAG))
         {
             TakeDamage(1);
         }
     }
 
-    private void OnCollisionExit2D(Collision2D collision)
+    private void OnCollisionExit2D(Collision2D other)
     {
-        if (collision.collider.CompareTag(GameConfig.SPECIAL_BASE_TAG))
+        if (other.collider.CompareTag(GameConfig.SPECIAL_BASE_TAG))
         {
             _baseRb = null;
             transform.SetParent(null);
