@@ -45,7 +45,7 @@ Nhiều năm trôi qua, tưởng chừng mọi chuyện đã bị lãng quên…
 1. Tải game tại link Google Drive bên dưới
  
    👉 **Link tải:**
-   [https://drive.google.com/drive/folders/1VMG5L0x2hIqo6rCwDpge3_XO52LWT0UT?usp=sharing](https://drive.google.com/drive/folders/1VMG5L0x2hIqo6rCwDpge3_XO52LWT0UT?usp=sharing)
+   [https://drive.google.com/drive/folders/1TnfBdmnUpgJSuRs3KglulZazf9NTuOLA?usp=sharing](https://drive.google.com/drive/folders/1TnfBdmnUpgJSuRs3KglulZazf9NTuOLA?usp=sharing)
 
 2. Giải nén file vừa tải về
 
