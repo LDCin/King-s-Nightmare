@@ -165,8 +165,10 @@ MonoBehaviour:
 
     - W/S: CLIMB THE STAIRS (UP/DOWN)
 
-    - SPACE:
-    JUMP
+    - J:
+    ATTACK
+
+    - SPACE: JUMP
 
     - E: INTERACT WITH THE GATE
 
