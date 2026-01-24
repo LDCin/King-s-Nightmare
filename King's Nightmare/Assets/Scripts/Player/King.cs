@@ -7,6 +7,7 @@ using UnityEngine;
 public class King : MonoBehaviour
 {
     public static event Action OnPlayerDied;
+    public static event Action<int> OnPlayerTakeDamage;
     public static event Action OnPlayerWinGame;
 
     [Header("Components")]
@@ -203,6 +204,7 @@ public class King : MonoBehaviour
     {
         _anim.SetTrigger(GameConfig.HIT_TRIGGER);
         _currentHP -= damage;
+        OnPlayerTakeDamage?.Invoke(_currentHP);
         if (_currentHP <= 0)
         {
             _anim.SetBool(GameConfig.DEAD_BOOL, true);

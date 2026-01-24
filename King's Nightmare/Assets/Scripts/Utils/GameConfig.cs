@@ -3,7 +3,7 @@ using UnityEngine;
 public class GameConfig
 {
     // SCENE
-    public static string MENU_SCENE = "Menu Scene";
+    public static string MENU_SCENE = "Menu";
     public static string MAP_1_SCENE = "Map 1";
     // ANIMATION
     // I. Player, Enemy
@@ -40,6 +40,9 @@ public class GameConfig
     public static string PANEL_PATH = "UI/Panels/";
     public static string SETTING_PANEL = "Panel - Setting";
     public static string PAUSE_PANEL = "Panel - Pause";
+    public static string END_GAME_PANEL = "Panel - End Game";
+    public static string GAMEPLAY_PANEL = "Panel - Gameplay";
+    public static string MENU_PANEL = "Panel - Menu";
 
     // SOUND
     public static int BGM_STATE => PlayerPrefs.GetInt("BGMState", 1);
