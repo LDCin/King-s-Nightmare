@@ -2,23 +2,28 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
 
-public class WinGamePanel : Panel
+public class EndGamePanel : Panel
 {
     [SerializeField] private TextMeshProUGUI _winText;
     [SerializeField] private TextMeshProUGUI _lossText;
     public void Restart()
     {
         Close();
+        Time.timeScale = 1;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        PanelManager.Instance.OpenPanel(GameConfig.GAMEPLAY_PANEL);
     }
     public void ReturnToMenu()
     {
         PanelManager.Instance.CloseAllPanel();
         SceneManager.LoadScene(GameConfig.MENU_SCENE);
+        PanelManager.Instance.OpenPanel(GameConfig.MENU_PANEL);
     }
     public void OnEnable()
     {
+        Time.timeScale = 0;
         UpdateResult();
+        PanelManager.Instance.ClosePanel(GameConfig.GAMEPLAY_PANEL);
     }
     public void OnDisable()
     {

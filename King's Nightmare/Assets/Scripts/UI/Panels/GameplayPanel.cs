@@ -15,6 +15,7 @@ public class GameplayPanel : Panel
     {
         ScoreManager.OnUpdateScore += UpdateScoreText;
         King.OnPlayerTakeDamage += UpdateHP;
+        UpdateHP(3);
     }
     private void OnDisable()
     {
@@ -25,7 +26,7 @@ public class GameplayPanel : Panel
     {
         OnNewGame?.Invoke();
         UpdateScoreText();
-        UpdateHP(3);
+        // UpdateHP(3);
     }
     private void UpdateScoreText()
     {
@@ -52,6 +53,7 @@ public class GameplayPanel : Panel
     public void Pause()
     {
         Debug.Log("Open Pause Panel");
+        Close();
         PanelManager.Instance.OpenPanel(GameConfig.PAUSE_PANEL);
     }
 }

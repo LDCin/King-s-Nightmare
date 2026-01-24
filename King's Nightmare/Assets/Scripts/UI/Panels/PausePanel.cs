@@ -19,6 +19,7 @@ public class PausePanel : Panel
         Time.timeScale = 1;
         Close();
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        PanelManager.Instance.OpenPanel(GameConfig.GAMEPLAY_PANEL);
     }
     public void ReturnToMenu()
     {
