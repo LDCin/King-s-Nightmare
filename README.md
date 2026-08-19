@@ -55,10 +55,6 @@ Nhiều năm trôi qua, tưởng chừng mọi chuyện đã bị lãng quên…
 
 ---
 
-Dưới đây là **phần README bổ sung** “🛠️ Cách build & chạy game” theo đúng nội dung bạn đưa, mình viết lại cho **đẹp – rõ – đúng chuẩn README GitHub** (có thêm vài lưu ý nhỏ để người khác clone về chạy không bị lỗi).
-
----
-
 ## 🛠️ Cách build & chạy game (Unity Project)
 
 ### 📌 Yêu cầu môi trường
